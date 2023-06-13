@@ -19,10 +19,28 @@ class Channel:
         self.view_count = self.get_info()['items'][0]['statistics']['viewCount']
 
     def __str__(self):
-        pass
+        return f"{self.title} ({self.url})"
 
     def __add__(self, other):
-        pass
+        return int(self.subscriber_count) + int(other.subscriber_count)
+
+    def __sub__(self, other):
+        return int(self.subscriber_count) - int(other.subscriber_count)
+
+    def __gt__(self, other):
+        return int(self.subscriber_count) > int(other.subscriber_count)
+
+    def __ge__(self, other):
+        return int(self.subscriber_count) >= int(other.subscriber_count)
+
+    def __lt__(self, other):
+        return int(self.subscriber_count) < int(other.subscriber_count)
+
+    def __le__(self, other):
+        return int(self.subscriber_count) <= int(other.subscriber_count)
+
+    def __eq__(self, other):
+        return int(self.subscriber_count) == int(other.subscriber_count)
 
     def get_info(self):
         channel = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
