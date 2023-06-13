@@ -18,6 +18,12 @@ class Channel:
         self.video_count = self.get_info()['items'][0]['statistics']['videoCount']
         self.view_count = self.get_info()['items'][0]['statistics']['viewCount']
 
+    def __str__(self):
+        pass
+
+    def __add__(self, other):
+        pass
+
     def get_info(self):
         channel = self.get_service().channels().list(id=self.__channel_id, part='snippet,statistics').execute()
         return channel
