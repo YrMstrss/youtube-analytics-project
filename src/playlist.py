@@ -56,3 +56,20 @@ class PlayList:
             total_duration += duration
 
         return total_duration
+
+    def show_best_video(self):
+        best_video_likes = 0
+        best_video_url = ''
+
+        for video_id in self.get_video_ids():
+            video = self.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails',
+                                                     id=video_id
+                                                     ).execute()
+            likes = int(video['items'][0]['statistics']['likeCount'])
+            if likes > best_video_likes:
+                best_video_likes = likes
+                best_video_url = ''.join(['https://youtu.be/', video_id])
+            else:
+                continue
+
+        return best_video_url
