@@ -8,13 +8,19 @@ class Video:
 
     def __init__(self, video_id):
         self.__video_id = video_id
-        self.video_title = self.get_info()['items'][0]['snippet']['title']
-        self.video_url = ''.join(['https://www.youtube.com/watch?v=', self.__video_id])
-        self.views_counter = self.get_info()['items'][0]['statistics']['viewCount']
-        self.likes_counter = self.get_info()['items'][0]['statistics']['likeCount']
+        try:
+            self.title = self.get_info()['items'][0]['snippet']['title']
+            self.url = ''.join(['https://www.youtube.com/watch?v=', self.__video_id])
+            self.views_counter = self.get_info()['items'][0]['statistics']['viewCount']
+            self.like_count = self.get_info()['items'][0]['statistics']['likeCount']
+        except IndexError:
+            self.title = None
+            self.url = None
+            self.views_counter = None
+            self.like_count = None
 
     def __str__(self):
-        return self.video_title
+        return self.title
 
     def get_info(self):
         video = self.get_service().videos().list(part='snippet,statistics,contentDetails,topicDetails',
